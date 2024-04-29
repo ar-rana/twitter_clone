@@ -1,5 +1,11 @@
-export default function Home(){
+import Sidebar from "@/components/Sidebar";
+
+export default function Home() {
   return (
-    <h1>HElloooo</h1>
-  )
+    <div>
+      <main className="flex min-h-screen max-w-7xl mx-auto">
+        <Sidebar />
+      </main>
+    </div>
+  );
 }
