@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function SidebarMenuitem({text, Icon, active}) {
   return (
     <div className='hoverEffect flex items-center text-gray-900 xl:justify-start text-lg xl:space-x-2'>

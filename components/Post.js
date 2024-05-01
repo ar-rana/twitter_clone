@@ -23,13 +23,13 @@ export default function Post({post}) {
             {/* {post-img} */}
             <img className="rounded-2xl mr-2" src={post.img}alt="error"/>
 
-            <div className="flex justify-between text-gray-600 mt-1">
+            <div className="flex justify-between text-gray-600 mt-2">
                 {/* {icons} */}
-                <ChatBubbleOvalLeftEllipsisIcon className="h-7 w-7 hoverEffect hover:text-sky-400"/>
-                <TrashIcon className="h-7 w-7 hoverEffect hover:text-red-800"/>
-                <HeartIcon className="h-7 w-7 hoverEffect hover:text-red-500"/>
-                <ShareIcon className="h-7 w-7 hoverEffect hover:text-green-500"/>
-                <ChartBarIcon className="h-7 w-7 hoverEffect hover:text-yellow-500"/>
+                <ChatBubbleOvalLeftEllipsisIcon className="h-7 w-7 hoverEffect hover:text-sky-400 p-1"/>
+                <TrashIcon className="h-7 w-7 hoverEffect hover:text-red-800 p-1"/>
+                <HeartIcon className="h-7 w-7 hoverEffect hover:text-red-500 p-1"/>
+                <ShareIcon className="h-7 w-7 hoverEffect hover:text-green-500 p-1"/>
+                <ChartBarIcon className="h-7 w-7 hoverEffect hover:text-yellow-500 p-1"/>
             </div>
         </div>
     </div>
