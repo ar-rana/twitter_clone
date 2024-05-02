@@ -5,7 +5,7 @@ import { HashtagIcon, BellIcon, InboxIcon, BookmarkIcon,ClipboardIcon, UserIcon,
 
 export default function Sidebar() {
   return (
-    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
+    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
         <div className="hoverEffect">
             <Image width="40" height="40" src="https://i.pinimg.com/564x/cc/31/6f/cc316f97197528e5e26e613a93ab16a4.jpg"></Image>
         </div>
