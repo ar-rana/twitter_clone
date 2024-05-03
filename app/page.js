@@ -16,13 +16,4 @@ export default function Home() {
   );
 }
 
-export async function fetchNews() {
-  const res = await fetch(
-    "https://saurav.tech/NewsAPI/top-headlines/category/business/in.json"
-  );
-  const data = await res.json();
-  return {
-    data
-  };
-}
 

@@ -21,7 +21,7 @@ export default function Post({post}) {
             <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">{post.text}</p>
 
             {/* {post-img} */}
-            <img className="rounded-2xl mr-2" src={post.img}alt="error"/>
+            <img className="rounded-2xl mr-2" src={post.img} alt="error"/>
 
             <div className="flex justify-between text-gray-600 mt-2">
                 {/* {icons} */}

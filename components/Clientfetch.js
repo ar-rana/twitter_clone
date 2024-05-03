@@ -1,17 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchNews } from "@/app/page";
+
+export async function fetchNews() {
+  const res = await fetch(
+    "https://saurav.tech/NewsAPI/top-headlines/category/business/in.json"
+  );
+  const data = await res.json();
+  return {
+    data,
+  };
+}
 
 export function Clientfetch() {
   const [news, setNews] = useState(null);
+  const [count, setCount] = useState(3);
 
   useEffect(() => {
-    const fetchData = () => {
-      const newsResults = fetchNews();
+    const fetchData = async () => {
+      const newsResults = await fetchNews();
+      //console.log("dataaaa: ", newsResults);
       setNews(newsResults.data);
     };
-    setTimeout(fetchData(), 2000);
-    setTimeout(console.log("newsssssss: ", news), 3000);
+    fetchData();
   }, []);
 
   if (!news) {
@@ -24,25 +34,25 @@ export function Clientfetch() {
   }
   //   console.log("newsssssss: ", news)
   return (
-    <div>
-      <h4>What's Happening?</h4>
-      {news.articles.map((article) => (
-        <div className="cursor-pointer hover:bg-gray-200 space-y-0.5">
-            <a className="text-gray-600 hover:underline" href={article.url} target="_blank">{article.title}</a>
+    <div className="bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%]">
+      <h4 className="text-lg font-bold mb-2">What's Happening?</h4>
+      {news.articles.slice(0, count).map((article) => (
+        <div className="flex items-center">
+          <div className="cursor-pointer hover:bg-gray-200 mb-1.5">
+            <a
+              className="text-gray-600 font-bold hover:underline space-x-1"
+              href={article.url}
+              target="_blank"
+            >
+              {article.title}
+            </a>
+            <p className="text-gray-700">{article.author}</ p>
+          </div>
+          <img className="rounded-2xl" src={article.urlToImage} alt="err" width="70" height="50"/>
         </div>
       ))}
+      <button className="hover:underline" onClick={()=>setCount(count+3)}>See More</button>
     </div>
   );
 }
-// const get = Clientfetch();
-// console.log("dataaaaaaa: ", get)
 
-// https://saurav.tech/NewsAPI/top-headlines/category/business/in.json
-
-// export const getServerSideProps = (async () => {
-//   // Fetch data from external API
-//   const res = fetch('https://saurav.tech/NewsAPI/top-headlines/category/business/in.json')
-//   const newsResults = await res.json()
-//   // Pass data to the page via props
-//   return { props: { newsResults } }
-// })
