@@ -80,12 +80,12 @@ export function Clientfetch() {
           See More
         </button>
       </div>
-      <div className="bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%] sticky top-20 z-40">
+      <div className="bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%] z-40 sticky top-16">
         <h4 className="font-bold text-lg">Who to Follow?</h4>
         {users.results.slice(0,userCount).map((user)=>(
           <div key={user.login.username} className="flex p-1.5 hover:bg-gray-200 items-center rounded-3xl cursor-pointer">
             <img className="rounded-full" src={user.picture.thumbnail} alt="err" width="45" height="40"/>
-            <div className="truncate">
+            <div className="truncate ml-1">
               <h4 className="font-bold truncate">{user.name.first} {user.name.last}</h4>
               <h5 className="text-gray-500 text-sm hover:underline">@{user.login.username}</h5>
             </div>
