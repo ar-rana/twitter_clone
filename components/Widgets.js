@@ -11,7 +11,7 @@ export default function Widgets() {
   // });
   return (
     <div className="xl:w-[600px] hidden lg:inline ml-8 space-y-5">
-      <div className="w-[90%] xl:w-[75%] sticky bg-white py-1.5 z-50">
+      <div className="w-[90%] xl:w-[75%] sticky bg-white py-1.5 z-50 top-0">
         <div className="flex items-center p-2 rounded-full bg-gray-200 relative">
           <MagnifyingGlassIcon className="h-5 z-50 text-gray-500" />
           <input
