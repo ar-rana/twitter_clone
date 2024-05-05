@@ -1,11 +1,20 @@
+"use client";
 import { FaceSmileIcon, PhotoIcon } from "@heroicons/react/24/outline";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Input() {
+  const { data: session } = useSession();
+  console.log(session);
+
+  if (!session) {
+    return;
+  }
   return (
     <div className="flex border-b border-gray-200 p-3 space-x-3">
       <img
+        onClick={signOut}
         className="h-8 rounded-full cursor-pointer hover:brightness-95"
-        src="https://i.pinimg.com/564x/4f/f6/15/4ff6159b7790b36775f596c4efa46265.jpg"
+        src={session.user.image}
         alt="img"
       />
       <div className="w-full divide-y divide-gray-200">
@@ -21,7 +30,12 @@ export default function Input() {
             <PhotoIcon className="h-9 w-9 p-1 hoverEffect" />
             <FaceSmileIcon className="h-9 w-9 p-1 hoverEffect" />
           </div>
-          <button className="bg-blue-400 text-white rounded-full px-4 w-35 h-10 font-bold shadow-md hover:brightness-95 disabled:opacity-50" disabled>Tweet</button>
+          <button
+            className="bg-blue-400 text-white rounded-full px-4 w-35 h-10 font-bold shadow-md hover:brightness-95 disabled:opacity-50"
+            disabled
+          >
+            Tweet
+          </button>
         </div>
       </div>
     </div>
