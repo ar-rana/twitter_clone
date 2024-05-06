@@ -16,9 +16,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 export default function Sidebar() {
   let username;
   const { data: session } = useSession();
-  if (session) {
-    username = session.user.name.split(" ").join("").toLocaleLowerCase();
-  }
+
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
       <div className="hoverEffect">
@@ -57,7 +55,7 @@ export default function Sidebar() {
             />
             <div className="leading-5 hidden xl:inline">
               <h4 className="font-bold rounded-full">{session.user.name}</h4>
-              <p className="text-gray-400">@{username}</p>
+              <p className="text-gray-400">@{session.user.username}</p>
             </div>
             <EllipsisHorizontalIcon className="h-7 xl:ml-7 hidden xl:inline" />
           </div>

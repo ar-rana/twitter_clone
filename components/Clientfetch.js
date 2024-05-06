@@ -31,8 +31,8 @@ export function Clientfetch() {
     const fetchData = async () => {
       const newsResults = await fetchNews();
       const userList = await fetchUsers();
-      //console.log("dataaaa: ", newsResults);
-      console.log("dataaaaUserka: ", userList);
+      //console.log("datanewsapi: ", newsResults);
+      //console.log("dataUserapi: ", userList);
       setNews(newsResults.data);
       setUsers(userList.UserData)
     };
