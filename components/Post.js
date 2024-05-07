@@ -1,3 +1,4 @@
+"use client";
 import {
   ChartBarIcon,
   ChatBubbleOvalLeftEllipsisIcon,
@@ -6,10 +7,53 @@ import {
   ShareIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconFilled } from "@heroicons/react/24/solid";
+import {
+  setDoc,
+  doc,
+  onSnapshot,
+  collection,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "@/firebase";
+import { signIn, useSession } from "next-auth/react";
 import Moment from "react-moment";
-//import { data } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 export default function Post({ post }) {
+  const { data: session } = useSession();
+  const [likes, setLikes] = useState([]);
+  const [hasliked, setHasliked] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", post.id, "likes"),
+      (snapshot) => setLikes(snapshot.docs)
+    );
+  }, []);
+  useEffect(() => {
+    if (likes.findIndex((like) => like.id === session?.user.uid) !== -1) {
+      setHasliked(true);
+    } else {
+      setHasliked(false);
+    }
+    // !== -1 means that the person does not exist within the likes array
+  }, [likes, session?.user.uid]);
+
+  async function likePost() {
+    if (session) {
+      if (hasliked) {
+        await deleteDoc(doc(db, "posts", post.id, "likes", session.user.uid));
+      } else {
+        await setDoc(doc(db, "posts", post.id, "likes", session?.user.uid), {
+          username: session.user.username,
+        });
+      }
+    } else {
+        signIn();
+    }
+  }
+
   return (
     <div className="flex p-3 cursor-pointer border-b border-gray-200">
       {/* {user_img} */}
@@ -26,9 +70,11 @@ export default function Post({ post }) {
             <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
               {post.data().name}
             </h4>
-            <span className="text-sm sm:text-[15px]">@{post.data().username} - </span>
+            <span className="text-sm sm:text-[15px]">
+              @{post.data().username} -{" "}
+            </span>
             <span className="text-sm sm:rext-[15px] hover:underline">
-              <Moment format="YYYY-MM-DD HH:mm:ss">{post?.timestamp?.toDate()}</Moment>
+              <Moment fromNow>{post?.data().timestamp?.toDate()}</Moment>
             </span>
           </div>
           {/* {dot-icon} */}
@@ -46,7 +92,26 @@ export default function Post({ post }) {
           {/* {icons} */}
           <ChatBubbleOvalLeftEllipsisIcon className="h-7 w-7 hoverEffect hover:text-sky-400 p-1" />
           <TrashIcon className="h-7 w-7 hoverEffect hover:text-red-800 p-1" />
-          <HeartIcon className="h-7 w-7 hoverEffect hover:text-red-500 p-1" />
+          <div className="flex items-center">
+            {hasliked ? (
+              <HeartIconFilled
+                onClick={likePost}
+                className="h-7 w-7 hoverEffect text-red-500 p-1"
+              />
+            ) : (
+              <HeartIcon
+                onClick={likePost}
+                className="h-7 w-7 hoverEffect hover:text-red-500 p-1"
+              />
+            )}
+            {likes.length > 0 && (
+              <>
+                <span className={`${hasliked && "text-red-500"}`}>
+                  {likes.length}
+                </span>
+              </>
+            )}
+          </div>
           <ShareIcon className="h-7 w-7 hoverEffect hover:text-green-500 p-1" />
           <ChartBarIcon className="h-7 w-7 hoverEffect hover:text-yellow-500 p-1" />
         </div>
