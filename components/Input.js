@@ -30,7 +30,7 @@ export default function Input() {
       name: session.user.name,
       username: session.user.username,
     });
-    setInput("");
+    
 
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
     if (base64){
@@ -42,6 +42,7 @@ export default function Input() {
       })
     }
     setBase64(null)
+    setInput("")
     // setLoading(false)
   };
 
