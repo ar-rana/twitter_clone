@@ -20,8 +20,11 @@ import { signIn, useSession } from "next-auth/react";
 import Moment from "react-moment";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
+import { useContext } from "react";
+import { ModalState } from "@/app/context/ModalState";
 
 export default function Post({ post }) {
+  const { open, setOpen } = useContext(ModalState);
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
   const [hasliked, setHasliked] = useState(false);
@@ -100,7 +103,7 @@ export default function Post({ post }) {
 
         <div className="flex justify-between text-gray-600 mt-2">
           {/* {icons} */}
-          <ChatBubbleOvalLeftEllipsisIcon className="h-7 w-7 hoverEffect hover:text-sky-400 p-1" />
+          <ChatBubbleOvalLeftEllipsisIcon onClick={()=>setOpen((prevstate)=> !prevstate)} className="h-7 w-7 hoverEffect hover:text-sky-400 p-1" />
           {session?.user.uid === post?.data().id && (
             <TrashIcon onClick={deletePost} className="h-7 w-7 hoverEffect hover:text-red-800 p-1" />
           )}
