@@ -89,7 +89,7 @@ export default function Input() {
         )}
         <div className="flex items-center justify-between pt-2">
           <div className="flex">
-            <div class="" onClick={() => fileChooser.current.click()}>
+            <div className="" onClick={() => fileChooser.current.click()}>
               <PhotoIcon className="h-9 w-9 p-1 hoverEffect" />
               <input type="file" hidden ref={fileChooser} onChange={getBase64} />
             </div>

@@ -24,7 +24,8 @@ import { useContext } from "react";
 import { ModalState } from "@/app/context/ModalState";
 
 export default function Post({ post }) {
-  const { open, setOpen } = useContext(ModalState);
+  const { setOpen } = useContext(ModalState);
+  const { setPostId } = useContext(ModalState);
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
   const [hasliked, setHasliked] = useState(false);
@@ -58,11 +59,11 @@ export default function Post({ post }) {
     }
   }
 
-  async function deletePost(){
-    if (window.confirm("Do you want you want to delete this post?")){
-      deleteDoc(doc(db , "posts", post.id));
-      if (post.data().image){
-        deleteObject(ref(storage, `posts/${post.id}/image`))
+  async function deletePost() {
+    if (window.confirm("Do you want you want to delete this post?")) {
+      deleteDoc(doc(db, "posts", post.id));
+      if (post.data().image) {
+        deleteObject(ref(storage, `posts/${post.id}/image`));
       }
     }
   }
@@ -103,9 +104,22 @@ export default function Post({ post }) {
 
         <div className="flex justify-between text-gray-600 mt-2">
           {/* {icons} */}
-          <ChatBubbleOvalLeftEllipsisIcon onClick={()=>setOpen((prevstate)=> !prevstate)} className="h-7 w-7 hoverEffect hover:text-sky-400 p-1" />
+          <ChatBubbleOvalLeftEllipsisIcon
+            onClick={() => {
+              if (!session) {
+                signIn()
+              } else {
+                setOpen((prevstate) => !prevstate)
+                setPostId(post.id)
+              }
+            }}
+            className="h-7 w-7 hoverEffect hover:text-sky-400 p-1"
+          />
           {session?.user.uid === post?.data().id && (
-            <TrashIcon onClick={deletePost} className="h-7 w-7 hoverEffect hover:text-red-800 p-1" />
+            <TrashIcon
+              onClick={deletePost}
+              className="h-7 w-7 hoverEffect hover:text-red-800 p-1"
+            />
           )}
           <div className="flex items-center">
             {hasliked ? (

@@ -8,9 +8,10 @@ import { useState } from "react";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  const [postId, setPostId] = useState("");
   return (
     <div>
-      <ModalState.Provider value={{ open, setOpen }}>
+      <ModalState.Provider value={{ open, setOpen, postId, setPostId }}>
         <main className="flex min-h-screen mx-auto">
           <Sidebar />
 
