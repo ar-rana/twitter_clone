@@ -4,7 +4,14 @@ import { ModalState } from "@/app/context/ModalState";
 import Modal from "react-modal";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { db } from "../firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
 import { FaceSmileIcon, PhotoIcon } from "@heroicons/react/24/outline";
@@ -12,6 +19,7 @@ import { FaceSmileIcon, PhotoIcon } from "@heroicons/react/24/outline";
 export default function CommentModal() {
   const { data: session } = useSession();
   const { open, setOpen } = useContext(ModalState);
+  const router = useRouter();
   const { postId } = useContext(ModalState);
   const [post, setPost] = useState({});
   const [input, setInput] = useState("");
@@ -24,6 +32,20 @@ export default function CommentModal() {
       });
     }
   }, [postId, db]);
+
+  async function sendComment() {
+    await addDoc(collection(db, "posts", postId, "comments"), {
+      comment: input,
+      name: session.user.name,
+      username: session.user.username,
+      image: session.user.image,
+      timestamp: serverTimestamp(),
+    });
+
+    setOpen(false);
+    setInput("");
+    router.push(`/posts/${postId}`);
+  }
 
   return (
     <div className="">
@@ -88,6 +110,7 @@ export default function CommentModal() {
                     <FaceSmileIcon className="h-9 w-9 p-1 hoverEffect" />
                   </div>
                   <button
+                    onClick={sendComment}
                     className="bg-blue-400 text-white rounded-full px-4 w-35 h-10 font-bold shadow-md hover:brightness-95 disabled:opacity-50"
                     disabled={!input.trim()}
                   >
