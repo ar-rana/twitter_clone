@@ -80,7 +80,7 @@ export function Clientfetch() {
           See More
         </button>
       </div>
-      <div className="bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%] z-40 sticky top-16">
+      <div className="bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%] sticky top-16">
         <h4 className="font-bold text-lg">Who to Follow?</h4>
         {users.results.slice(0,userCount).map((user)=>(
           <div key={user.login.username} className="flex p-1.5 hover:bg-gray-200 items-center rounded-3xl cursor-pointer">

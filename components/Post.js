@@ -39,7 +39,7 @@ export default function Post({ post, id }) {
       collection(db, "posts", id, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
-  }, []);
+  }, [db]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -48,7 +48,7 @@ export default function Post({ post, id }) {
         setComments(snapshot.docs);
       }
     );
-  }, []);
+  }, [db]);
 
   useEffect(() => {
     if (likes.findIndex((like) => like.id === session?.user.uid) !== -1) {
@@ -81,6 +81,7 @@ export default function Post({ post, id }) {
       }
       router.push("/")
     }
+    router.push("/")
   }
 
   return (
@@ -88,7 +89,7 @@ export default function Post({ post, id }) {
       {/* {user_img} */}
       <img
         className="h-9 w-9 rounded-full mr-4"
-        src={post?.data().userImg}
+        src={post?.data()?.userImg}
         alt="user"
       />
       <div className="flex-1">
@@ -97,25 +98,25 @@ export default function Post({ post, id }) {
           {/* {post user-info} */}
           <div className="flex items-center space-x-2 whitespace-nowrap">
             <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
-              {post?.data().name}
+              {post?.data()?.name}
             </h4>
             <span className="text-sm sm:text-[15px]">
-              @{post?.data().username} -{" "}
+              @{post?.data()?.username} -{" "}
             </span>
             <span className="text-sm sm:rext-[15px] hover:underline">
-              <Moment fromNow>{post?.data().timestamp?.toDate()}</Moment>
+              <Moment fromNow>{post?.data()?.timestamp?.toDate()}</Moment>
             </span>
           </div>
           {/* {dot-icon} */}
           <EllipsisHorizontalIcon className="h-8 p-1 w-10 hoverEffect" />
         </div>
         {/* {post-text} */}
-        <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">
-          {post?.data().text}
+        <p onClick={()=>router.push(`/posts/${id}`)} className="text-gray-800 text-[15px] sm:text-[16px] mb-2">
+          {post?.data()?.text}
         </p>
 
         {/* {post-img} */}
-        <img className="rounded-2xl mr-2" src={post?.data().image} alt="" />
+        <img onClick={()=>router.push(`/posts/${id}`)} className="rounded-2xl mr-2" src={post?.data().image} alt="" />
 
         <div className="flex justify-between text-gray-600 mt-2">
           {/* {icons} */}

@@ -64,7 +64,12 @@ export default function Postpage({ params }) {
             <Post post={post} id={postID} />
             {comments.length > 0 &&
               comments.map((comment) => (
-                <Comment key={comment.id} id={comment.id} comment={comment.data()} />
+                <Comment
+                  key={comment.id}
+                  commentId={comment.id}
+                  comment={comment.data()}
+                  originalPostID={postID}
+                />
               ))}
           </div>
 

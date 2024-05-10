@@ -40,6 +40,7 @@ export default function CommentModal() {
       username: session.user.username,
       image: session.user.image,
       timestamp: serverTimestamp(),
+      commentUID: session.user.uid,
     });
 
     setOpen(false);
@@ -51,7 +52,7 @@ export default function CommentModal() {
     <div className="">
       {open && (
         <Modal
-          className="max-w-lg h-[300px] w-[90%] absolute top-24 left-[50%] translate-x-[-50%] bg-white border-2 border-gray-400 rounded-xl shadow-md"
+          className="max-w-lg h-auto w-[90%] absolute top-24 left-[50%] translate-x-[-50%] bg-white border-2 border-gray-400 rounded-xl shadow-md"
           isOpen={open}
           onRequestClose={() => setOpen(false)}
         >
