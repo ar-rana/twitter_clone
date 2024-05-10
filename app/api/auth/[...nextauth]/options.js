@@ -15,6 +15,9 @@ export const options = {
     // error: '/auth/error',
     // signOut: '/api/auth/signout'
   },
+
+  secret: process.env.NETXAUTH_SECRET,
+
   callbacks: {
     async session({ session, token }) {
       session.user.username = session.user.name.split(" ").join("").toLocaleLowerCase()
