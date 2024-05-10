@@ -12,14 +12,16 @@ import {
   EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
   let username;
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
-      <div className="hoverEffect">
+      <div onClick={() => router.push("/")} className="hoverEffect">
         <Image
           width="40"
           height="40"
@@ -46,9 +48,12 @@ export default function Sidebar() {
             Tweet
           </button>
           {/* {mini profile} */}
-          <div className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start xl:mt-auto">
+          <div
+            title="Click to SignOut"
+            onClick={signOut}
+            className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start xl:mt-auto"
+          >
             <img
-              onClick={signOut}
               className="h-10 w-10 rounded-full xl:mr-2"
               src={session.user.image}
               alt="User-img"

@@ -19,20 +19,16 @@ import { db, storage } from "@/firebase";
 import { signIn, useSession } from "next-auth/react";
 import Moment from "react-moment";
 import { useEffect, useState } from "react";
-import { deleteObject, ref } from "firebase/storage";
+// import { deleteObject, ref } from "firebase/storage";
 import { useContext } from "react";
 import { ModalState } from "@/app/context/ModalState";
-import { useRouter } from "next/navigation";
-
 
 export default function Comment({ commentId, id, originalPostID,comment }) {
   const { setOpen } = useContext(ModalState);
   const { setPostId } = useContext(ModalState);
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
-  //const [comments, setComments] = useState("");
   const [hasliked, setHasliked] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -40,15 +36,6 @@ export default function Comment({ commentId, id, originalPostID,comment }) {
       (snapshot) => setLikes(snapshot.docs)
     );
   }, [db, originalPostID]);
-
-//   useEffect(() => {
-//     const unsubscribe = onSnapshot(
-//       collection(db, "posts", id, "comments"),
-//       (snapshot) => {
-//         setComments(snapshot.docs);
-//       }
-//     );
-//   }, [db]);
 
   useEffect(() => {
     if (likes.findIndex((like) => like.id === session?.user.uid) !== -1) {
@@ -76,10 +63,6 @@ export default function Comment({ commentId, id, originalPostID,comment }) {
   async function deleteComment() {
     if (window.confirm("Do you want you want to delete this comment?")) {
       deleteDoc(doc(db, "posts", originalPostID,"comments", commentId));
-    //   if (post.data().image) {
-    //     deleteObject(ref(storage, `posts/${id}/image`));
-    //   }
-    //   router.push("/")
     }
   }
 
@@ -94,7 +77,7 @@ export default function Comment({ commentId, id, originalPostID,comment }) {
       <div className="flex-1">
         {/* {header} */}
         <div className="flex items-center justify-between">
-          {/* {post user-info} */}
+          {/* {comment user-info} */}
           <div className="flex items-center space-x-2 whitespace-nowrap">
             <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
               {comment?.name}
@@ -109,13 +92,12 @@ export default function Comment({ commentId, id, originalPostID,comment }) {
           {/* {dot-icon} */}
           <EllipsisHorizontalIcon className="h-8 p-1 w-10 hoverEffect" />
         </div>
-        {/* {post-text} */}
+        {/* {comment-text} */}
         <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">
           {comment?.comment}
         </p>
 
-        {/* {post-img} */}
-        {/* <img className="rounded-2xl mr-2" src={post?.data().image} alt="" /> */}
+        {/* {comment-img} */}
 
         <div className="flex justify-between text-gray-600 mt-2">
           {/* {icons} */}

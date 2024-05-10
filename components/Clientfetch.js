@@ -34,7 +34,7 @@ export function Clientfetch() {
       //console.log("datanewsapi: ", newsResults);
       //console.log("dataUserapi: ", userList);
       setNews(newsResults.data);
-      setUsers(userList.UserData)
+      setUsers(userList.UserData);
     };
     fetchData();
   }, []);
@@ -42,7 +42,7 @@ export function Clientfetch() {
   if (!news) {
     return (
       <div className="text-gray-700 space-y-3 bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%]">
-        <h4 className="font-bold text-xl px-1">What's Happening?</h4>
+        <h4 className="font-bold text-xl px-1">What is Happening?</h4>
         <div>Loading...</div>
       </div>
     );
@@ -56,6 +56,7 @@ export function Clientfetch() {
           <div key={article.title} className="flex items-center">
             <div className="cursor-pointer hover:bg-gray-200 mb-1.5">
               <a
+                rel="noreferrer"
                 className="text-gray-600 font-bold hover:underline space-x-1"
                 href={article.url}
                 target="_blank"
@@ -82,18 +83,37 @@ export function Clientfetch() {
       </div>
       <div className="bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%] sticky top-16">
         <h4 className="font-bold text-lg">Who to Follow?</h4>
-        {users.results.slice(0,userCount).map((user)=>(
-          <div key={user.login.username} className="flex p-1.5 hover:bg-gray-200 items-center rounded-3xl cursor-pointer">
-            <img className="rounded-full" src={user.picture.thumbnail} alt="err" width="45" height="40"/>
+        {users.results.slice(0, userCount).map((user) => (
+          <div
+            key={user.login.username}
+            className="flex p-1.5 hover:bg-gray-200 items-center rounded-3xl cursor-pointer"
+          >
+            <img
+              className="rounded-full"
+              src={user.picture.thumbnail}
+              alt="err"
+              width="45"
+              height="40"
+            />
             <div className="truncate ml-1">
-              <h4 className="font-bold truncate">{user.name.first} {user.name.last}</h4>
-              <h5 className="text-gray-500 text-sm hover:underline">@{user.login.username}</h5>
+              <h4 className="font-bold truncate">
+                {user.name.first} {user.name.last}
+              </h4>
+              <h5 className="text-gray-500 text-sm hover:underline">
+                @{user.login.username}
+              </h5>
             </div>
-            <button className="bg-black text-white rounded-full font-bold px-3.5 py-1.5 ml-auto">Follow</button>
+            <button className="bg-black text-white rounded-full font-bold px-3.5 py-1.5 ml-auto">
+              Follow
+            </button>
           </div>
-        ))
-        }
-        <button className="hover:underline p-1" onClick={()=>setUsercount(userCount+3)}>See More</button>
+        ))}
+        <button
+          className="hover:underline p-1"
+          onClick={() => setUsercount(userCount + 3)}
+        >
+          See More
+        </button>
       </div>
     </div>
   );

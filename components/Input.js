@@ -1,7 +1,12 @@
 "use client";
 import { db, storage } from "@/firebase";
 import { FaceSmileIcon, PhotoIcon } from "@heroicons/react/24/outline";
-import { collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { useSession, signOut } from "next-auth/react";
 import { useRef, useState } from "react";
 import { addDoc } from "firebase/firestore";
@@ -30,19 +35,18 @@ export default function Input() {
       name: session.user.name,
       username: session.user.username,
     });
-    
 
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
-    if (base64){
-      await uploadString(imageRef, base64, "data_url").then(async()=>{
+    if (base64) {
+      await uploadString(imageRef, base64, "data_url").then(async () => {
         const downloadURL = await getDownloadURL(imageRef);
-        await updateDoc(doc(db, "posts", docRef.id),{
-          image: downloadURL
-        })
-      })
+        await updateDoc(doc(db, "posts", docRef.id), {
+          image: downloadURL,
+        });
+      });
     }
-    setBase64(null)
-    setInput("")
+    setBase64(null);
+    setInput("");
     // setLoading(false)
   };
 
@@ -64,6 +68,7 @@ export default function Input() {
   return (
     <div className="flex border-b border-gray-200 p-3 space-x-3">
       <img
+        title="Click to SignOut"
         onClick={signOut}
         className="h-8 rounded-full cursor-pointer hover:brightness-95"
         src={session.user.image}
@@ -81,17 +86,25 @@ export default function Input() {
         </div>
         {base64 && (
           <>
-          <div className="relative">
-            <XMarkIcon onClick={()=>setBase64(null)} className="h-7 absolute cursor-pointer bg-white rounded-full hover:shadow-lg"/>
-            <img src={base64} className=""/>
-          </div>
+            <div className="relative">
+              <XMarkIcon
+                onClick={() => setBase64(null)}
+                className="h-7 absolute cursor-pointer bg-white rounded-full hover:shadow-lg"
+              />
+              <img src={base64} className="" />
+            </div>
           </>
         )}
         <div className="flex items-center justify-between pt-2">
           <div className="flex">
             <div className="" onClick={() => fileChooser.current.click()}>
               <PhotoIcon className="h-9 w-9 p-1 hoverEffect" />
-              <input type="file" hidden ref={fileChooser} onChange={getBase64} />
+              <input
+                type="file"
+                hidden
+                ref={fileChooser}
+                onChange={getBase64}
+              />
             </div>
             <FaceSmileIcon className="h-9 w-9 p-1 hoverEffect" />
           </div>
