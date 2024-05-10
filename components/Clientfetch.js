@@ -51,7 +51,7 @@ export function Clientfetch() {
   return (
     <div className="space-y-3">
       <div className="bg-gray-100 rounded-2xl p-3 w-[90%] xl:w-[75%]">
-        <h4 className="text-lg font-bold mb-2">What's Happening?</h4>
+        <h4 className="text-lg font-bold mb-2">What is Happening?</h4>
         {news.articles.slice(0, count).map((article) => (
           <div key={article.title} className="flex items-center">
             <div className="cursor-pointer hover:bg-gray-200 mb-1.5">
